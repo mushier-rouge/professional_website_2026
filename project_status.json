@@ -1,0 +1,726 @@
+{
+  "meta": {
+    "project": "AI/ML Society Website",
+    "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
+    "last_updated": "2025-12-19T01:27:11Z",
+    "tdd_mode": "strict",
+    "ci_required": true
+  },
+  "stages": [
+    {
+      "id": "S1",
+      "name": "Foundations",
+      "status": "in_progress",
+      "progress": 0.2,
+      "tasks": [
+        {
+          "id": "S1-T1",
+          "title": "Supabase RLS baseline policies + tests",
+          "status": "in_progress",
+          "priority": "P0",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [
+              "supabase/migrations/20251219000000_init.sql",
+              "supabase/migrations/20251219001000_articles.sql",
+              "supabase/migrations/20251219002000_articles_delete.sql"
+            ],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Owner can update own profile",
+            "Public can read public profiles when visibility=public",
+            "Authors can only edit drafts they own",
+            "Editors can manage all articles"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "in_progress",
+            "commit": "",
+            "tests": [],
+            "notes": "Existing migrations include initial RLS policies; tests not yet added."
+          }
+        },
+        {
+          "id": "S1-T2",
+          "title": "Auth flows (signup/login/reset) + tests",
+          "status": "in_progress",
+          "priority": "P0",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [
+              "src/app/login/page.tsx"
+            ],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Signup, login, password reset flows work end-to-end",
+            "Email verification enforced for restricted actions"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "in_progress",
+            "commit": "",
+            "tests": [],
+            "notes": "Login UI exists; signup/reset flows not verified with tests."
+          }
+        },
+        {
+          "id": "S1-T3",
+          "title": "Profile management (public profile + edit) + tests",
+          "status": "in_progress",
+          "priority": "P0",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [
+              "supabase/migrations/20251219000000_init.sql"
+            ],
+            "routes": [
+              "src/app/profile/edit/page.tsx"
+            ],
+            "docs": [
+              "docs/features/profile_management.md"
+            ]
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "User can create or edit profile",
+            "Public profile page renders CV-like profile",
+            "Visibility + directory opt-out respected"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "in_progress",
+            "commit": "",
+            "tests": [],
+            "notes": "Profile edit UI exists; public profile + tests pending."
+          }
+        },
+        {
+          "id": "S1-T4",
+          "title": "Member directory + search filters",
+          "status": "not_started",
+          "priority": "P1",
+          "dependencies": [
+            "S1-T3"
+          ],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Directory lists members with grade badge",
+            "Search and filters work",
+            "Opt-out members are excluded"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        },
+        {
+          "id": "S1-T5",
+          "title": "RBAC roles + permissions + tests",
+          "status": "not_started",
+          "priority": "P0",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Roles/permissions stored in DB",
+            "Permission checks enforced in server actions",
+            "Audit logs capture role changes"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        },
+        {
+          "id": "S1-T6",
+          "title": "Taxonomy v1 (topics + expertise) + tests",
+          "status": "not_started",
+          "priority": "P1",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Topics + expertise tags stored in DB",
+            "Admin can manage taxonomy"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        },
+        {
+          "id": "S1-T7",
+          "title": "Policy pages scaffold",
+          "status": "in_progress",
+          "priority": "P1",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": [
+              "plan.md"
+            ]
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Editorial policy page exists",
+            "Membership grades & criteria page exists",
+            "Code of Conduct + Privacy/Terms pages exist"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "in_progress",
+            "commit": "",
+            "tests": [],
+            "notes": "Some policy content exists; full set not complete."
+          }
+        },
+        {
+          "id": "S1-T8",
+          "title": "Asset uploads (avatars + article assets) + tests",
+          "status": "not_started",
+          "priority": "P1",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Users can upload profile photos",
+            "Authors can upload article assets",
+            "Storage metadata stored with caption/credit/alt"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "name": "Articles MVP",
+      "status": "in_progress",
+      "progress": 0.15,
+      "tasks": [
+        {
+          "id": "S2-T1",
+          "title": "Article workflow FSM + tests",
+          "status": "not_started",
+          "priority": "P0",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": [
+              "docs/features/articles_management.md"
+            ]
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Valid transitions enforced",
+            "Invalid transitions rejected",
+            "Audit log recorded for state changes"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        },
+        {
+          "id": "S2-T2",
+          "title": "Article editor + revisions",
+          "status": "in_progress",
+          "priority": "P0",
+          "dependencies": [
+            "S2-T1"
+          ],
+          "artifacts": {
+            "tests": [],
+            "migrations": [
+              "supabase/migrations/20251219001000_articles.sql"
+            ],
+            "routes": [
+              "src/app/articles/new/page.tsx",
+              "src/app/articles/[id]/edit/page.tsx"
+            ],
+            "docs": [
+              "docs/features/articles_management.md"
+            ]
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Authors can create drafts",
+            "Authors can edit drafts",
+            "Revisions stored with metadata"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "in_progress",
+            "commit": "",
+            "tests": [],
+            "notes": "Draft UI exists; revisions not implemented."
+          }
+        },
+        {
+          "id": "S2-T3",
+          "title": "Submission workflow + editor triage",
+          "status": "not_started",
+          "priority": "P0",
+          "dependencies": [
+            "S2-T1"
+          ],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Authors can submit articles",
+            "Editors can change status and assign reviewers"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        },
+        {
+          "id": "S2-T4",
+          "title": "Public article pages + citations",
+          "status": "in_progress",
+          "priority": "P1",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [
+              "src/app/articles/[id]/page.tsx"
+            ],
+            "docs": [
+              "docs/features/articles_management.md"
+            ]
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Article page renders metadata and abstract",
+            "Cite-this panel with BibTeX/APA export",
+            "Disclosure panel visible"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "in_progress",
+            "commit": "",
+            "tests": [],
+            "notes": "Basic article detail exists; citation/disclosure panels pending."
+          }
+        },
+        {
+          "id": "S2-T5",
+          "title": "Articles browse + filters",
+          "status": "in_progress",
+          "priority": "P1",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [
+              "src/app/articles/page.tsx"
+            ],
+            "docs": [
+              "docs/features/articles_management.md"
+            ]
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Article listing renders",
+            "Filtering by topic/type works"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "in_progress",
+            "commit": "",
+            "tests": [],
+            "notes": "Basic listing exists; filters not implemented."
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "name": "Reviews",
+      "status": "not_started",
+      "progress": 0.0,
+      "tasks": [
+        {
+          "id": "S3-T1",
+          "title": "Reviewer assignment + review forms",
+          "status": "not_started",
+          "priority": "P0",
+          "dependencies": [
+            "S2-T3"
+          ],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Editors can assign reviewers",
+            "Reviewers can submit structured reviews"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        },
+        {
+          "id": "S3-T2",
+          "title": "Decision letters + revision loop",
+          "status": "not_started",
+          "priority": "P1",
+          "dependencies": [
+            "S3-T1"
+          ],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Editors send decision letters",
+            "Authors can resubmit revisions"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "name": "Membership grades",
+      "status": "in_progress",
+      "progress": 0.2,
+      "tasks": [
+        {
+          "id": "S4-T1",
+          "title": "Senior application workflow + tests",
+          "status": "in_progress",
+          "priority": "P0",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [
+              "supabase/migrations/20251219000000_init.sql"
+            ],
+            "routes": [
+              "src/app/membership/apply/page.tsx"
+            ],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Applicants can submit senior applications",
+            "Committee can approve/reject"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "in_progress",
+            "commit": "",
+            "tests": [],
+            "notes": "Application UI exists; committee workflow not implemented."
+          }
+        },
+        {
+          "id": "S4-T2",
+          "title": "Fellow nomination workflow + tests",
+          "status": "not_started",
+          "priority": "P1",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Nominator can initiate",
+            "Nominee can accept",
+            "Committee can decide"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        },
+        {
+          "id": "S4-T3",
+          "title": "Grade badges + audit logs",
+          "status": "in_progress",
+          "priority": "P1",
+          "dependencies": [],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Grade badges shown on profile + bylines",
+            "Audit logs for grade decisions"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "in_progress",
+            "commit": "",
+            "tests": [],
+            "notes": "Badges exist in UI; audit logs not implemented."
+          }
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "name": "Issues/Collections + polish",
+      "status": "not_started",
+      "progress": 0.0,
+      "tasks": [
+        {
+          "id": "S5-T1",
+          "title": "Issues/collections",
+          "status": "not_started",
+          "priority": "P2",
+          "dependencies": [
+            "S2-T4"
+          ],
+          "artifacts": {
+            "tests": [],
+            "migrations": [],
+            "routes": [],
+            "docs": []
+          },
+          "tdd": {
+            "red_tests": [],
+            "green_tests": [],
+            "coverage_note": ""
+          },
+          "acceptance_criteria": [
+            "Collections landing page exists",
+            "Articles can be assigned to a collection"
+          ],
+          "last_action": {
+            "ts": "2025-12-19T01:27:11Z",
+            "action": "initialized task",
+            "from_status": "not_started",
+            "to_status": "not_started",
+            "commit": "",
+            "tests": [],
+            "notes": ""
+          }
+        }
+      ]
+    }
+  ],
+  "work_queue": {
+    "policy": "maximize_parallel_progress",
+    "active": [
+      "S1-T1",
+      "S1-T2",
+      "S1-T3"
+    ],
+    "ready": [
+      "S2-T1",
+      "S2-T4",
+      "S4-T1"
+    ],
+    "blocked": []
+  },
+  "quality": {
+    "last_ci": {
+      "ts": "2025-12-19T01:27:11Z",
+      "result": "unknown",
+      "run_url": "",
+      "notes": "CI status not recorded yet."
+    },
+    "test_health": {
+      "unit_pass": true,
+      "integration_pass": false,
+      "e2e_pass": false,
+      "flaky_tests": []
+    }
+  }
+}
