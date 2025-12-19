@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T05:12:52Z",
+    "last_updated": "2025-12-19T05:15:30Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -11,7 +11,7 @@
       "id": "S1",
       "name": "Foundations",
       "status": "in_progress",
-      "progress": 0.25,
+      "progress": 0.3,
       "tasks": [
         {
           "id": "S1-T1",
@@ -250,17 +250,25 @@
           "priority": "P1",
           "dependencies": [],
           "artifacts": {
-            "tests": [],
+            "tests": [
+              "src/content/policies.test.ts"
+            ],
             "migrations": [],
-            "routes": [],
+            "routes": [
+              "src/app/about/page.tsx",
+              "src/app/about/[slug]/page.tsx"
+            ],
             "docs": [
               "plan.md"
             ]
           },
           "tdd": {
-            "red_tests": [],
+            "red_tests": [
+              "policyPages includes required policy paths",
+              "policyPages has unique slugs and paths"
+            ],
             "green_tests": [],
-            "coverage_note": ""
+            "coverage_note": "Policy inventory validated; about pages render from content."
           },
           "acceptance_criteria": [
             "Editorial policy page exists",
@@ -268,13 +276,15 @@
             "Code of Conduct + Privacy/Terms pages exist"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:27:11Z",
-            "action": "initialized task",
-            "from_status": "not_started",
+            "ts": "2025-12-19T05:15:30Z",
+            "action": "added policy content + about pages",
+            "from_status": "in_progress",
             "to_status": "in_progress",
             "commit": "",
-            "tests": [],
-            "notes": "Some policy content exists; full set not complete."
+            "tests": [
+              "src/content/policies.test.ts"
+            ],
+            "notes": "Added about index and policy detail pages backed by content."
           }
         },
         {
