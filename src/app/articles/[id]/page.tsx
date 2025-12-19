@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { buildBibTeX, buildCitation } from "@/lib/articles/citation";
 import { createSupabaseServerClient } from "@/lib/supabase/serverClient";
 
 type ArticleRow = {
@@ -16,6 +17,12 @@ export const metadata: Metadata = {
   title: "Article",
   description: "Article details.",
 };
+
+function formatIsoDate(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toISOString().slice(0, 10);
+}
 
 export default async function ArticleDetailPage({
   params,
@@ -97,6 +104,20 @@ export default async function ArticleDetailPage({
 
   const article = row as ArticleRow;
   const isAuthor = article.author_user_id === user.id;
+  const authorLabel = isAuthor ? user.email ?? "You" : "Member";
+  const publishedDate = formatIsoDate(article.created_at);
+  const citeThis = buildCitation({
+    title: article.title,
+    author: authorLabel,
+    publishedAt: article.created_at,
+    url: article.external_url ?? undefined,
+  });
+  const bibTeX = buildBibTeX({
+    title: article.title,
+    author: authorLabel,
+    publishedAt: article.created_at,
+    url: article.external_url ?? undefined,
+  });
 
   return (
     <div className="mx-auto w-full max-w-2xl space-y-6">
@@ -104,23 +125,57 @@ export default async function ArticleDetailPage({
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
           {article.title}
         </h1>
-        {article.summary ? (
-          <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-            {article.summary}
-          </p>
-        ) : null}
+        <dl className="flex flex-wrap gap-6 text-xs text-zinc-500 dark:text-zinc-400">
+          <div>
+            <dt className="uppercase tracking-wide">Author</dt>
+            <dd className="mt-1 text-zinc-700 dark:text-zinc-300">{authorLabel}</dd>
+          </div>
+          <div>
+            <dt className="uppercase tracking-wide">Published</dt>
+            <dd className="mt-1 text-zinc-700 dark:text-zinc-300">{publishedDate}</dd>
+          </div>
+        </dl>
       </header>
 
-      {article.external_url ? (
-        <a
-          href={article.external_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-10 items-center justify-center rounded-lg border border-black/[.08] bg-white px-4 text-sm font-medium text-zinc-900 shadow-sm hover:bg-black/[.02] dark:border-white/[.12] dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-white/[.06]"
-        >
-          Open external link
-        </a>
-      ) : null}
+      <section className="rounded-2xl border border-black/[.06] bg-white p-5 text-sm text-zinc-700 shadow-sm dark:border-white/[.08] dark:bg-zinc-950 dark:text-zinc-200">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+          Abstract
+        </h2>
+        <p className="mt-2 leading-6">
+          {article.summary || "No abstract has been provided yet."}
+        </p>
+      </section>
+
+      <section className="rounded-2xl border border-black/[.06] bg-white p-5 text-sm text-zinc-700 shadow-sm dark:border-white/[.08] dark:bg-zinc-950 dark:text-zinc-200">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+            Cite this
+          </h2>
+          {article.external_url ? (
+            <a
+              href={article.external_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-zinc-600 hover:underline dark:text-zinc-400"
+            >
+              Source link
+            </a>
+          ) : null}
+        </div>
+        <p className="mt-2 font-mono text-xs text-zinc-800 dark:text-zinc-200">
+          {citeThis}
+        </p>
+        <pre className="mt-4 overflow-x-auto rounded-lg border border-black/[.06] bg-zinc-50 p-3 text-xs text-zinc-800 dark:border-white/[.08] dark:bg-zinc-900 dark:text-zinc-200">
+          {bibTeX}
+        </pre>
+      </section>
+
+      <section className="rounded-2xl border border-black/[.06] bg-white p-5 text-sm text-zinc-700 shadow-sm dark:border-white/[.08] dark:bg-zinc-950 dark:text-zinc-200">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+          Disclosures
+        </h2>
+        <p className="mt-2">No disclosures reported.</p>
+      </section>
 
       <div className="flex flex-wrap gap-4 text-sm">
         <Link href="/articles" className="text-zinc-600 hover:underline dark:text-zinc-400">

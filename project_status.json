@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T01:40:51Z",
+    "last_updated": "2025-12-19T05:08:06Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -304,7 +304,7 @@
       "id": "S2",
       "name": "Articles MVP",
       "status": "in_progress",
-      "progress": 0.2,
+      "progress": 0.25,
       "tasks": [
         {
           "id": "S2-T1",
@@ -430,7 +430,9 @@
           "priority": "P1",
           "dependencies": [],
           "artifacts": {
-            "tests": [],
+            "tests": [
+              "src/lib/articles/citation.test.ts"
+            ],
             "migrations": [],
             "routes": [
               "src/app/articles/[id]/page.tsx"
@@ -440,9 +442,14 @@
             ]
           },
           "tdd": {
-            "red_tests": [],
+            "red_tests": [
+              "buildCitation builds citation with author/year/url",
+              "buildCitation falls back when author/date missing",
+              "buildBibTeX builds entry",
+              "buildBibTeX omits year when unavailable"
+            ],
             "green_tests": [],
-            "coverage_note": ""
+            "coverage_note": "Citation formatting covered; UI panels added to article detail."
           },
           "acceptance_criteria": [
             "Article page renders metadata and abstract",
@@ -450,13 +457,15 @@
             "Disclosure panel visible"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:27:11Z",
-            "action": "initialized task",
-            "from_status": "not_started",
+            "ts": "2025-12-19T05:08:06Z",
+            "action": "added citation helpers + article detail panels",
+            "from_status": "in_progress",
             "to_status": "in_progress",
             "commit": "",
-            "tests": [],
-            "notes": "Basic article detail exists; citation/disclosure panels pending."
+            "tests": [
+              "src/lib/articles/citation.test.ts"
+            ],
+            "notes": "Added abstract, cite-this, and disclosure panels."
           }
         },
         {
