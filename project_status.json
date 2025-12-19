@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T05:09:19Z",
+    "last_updated": "2025-12-19T05:11:57Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -11,7 +11,7 @@
       "id": "S1",
       "name": "Foundations",
       "status": "in_progress",
-      "progress": 0.2,
+      "progress": 0.25,
       "tasks": [
         {
           "id": "S1-T1",
@@ -138,21 +138,30 @@
         {
           "id": "S1-T4",
           "title": "Member directory + search filters",
-          "status": "not_started",
+          "status": "in_progress",
           "priority": "P1",
           "dependencies": [
             "S1-T3"
           ],
           "artifacts": {
-            "tests": [],
+            "tests": [
+              "src/lib/members/slug.test.ts"
+            ],
             "migrations": [],
-            "routes": [],
+            "routes": [
+              "src/app/members/page.tsx",
+              "src/app/members/[slug]/page.tsx"
+            ],
             "docs": []
           },
           "tdd": {
-            "red_tests": [],
+            "red_tests": [
+              "toMemberSlug converts names to kebab-case",
+              "toMemberSlug strips punctuation and extra spaces",
+              "isMemberSlugMatch matches slug to name"
+            ],
             "green_tests": [],
-            "coverage_note": ""
+            "coverage_note": "Slug normalization covered; directory UI uses static member list."
           },
           "acceptance_criteria": [
             "Directory lists members with grade badge",
@@ -160,13 +169,15 @@
             "Opt-out members are excluded"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:27:11Z",
-            "action": "initialized task",
+            "ts": "2025-12-19T05:11:57Z",
+            "action": "added member directory scaffolding",
             "from_status": "not_started",
-            "to_status": "not_started",
+            "to_status": "in_progress",
             "commit": "",
-            "tests": [],
-            "notes": ""
+            "tests": [
+              "src/lib/members/slug.test.ts"
+            ],
+            "notes": "Directory uses static profile data pending Supabase visibility policies."
           }
         },
         {
