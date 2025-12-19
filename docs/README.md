@@ -3,6 +3,10 @@
 ## Project Management
 - [TODO List](todo.md)
 
+## Features
+- [Profile Management](features/profile_management.md)
+- [Articles Management](features/articles_management.md)
+
 ## Setup
 - [Setup Guide](setup_guide.md)
 
