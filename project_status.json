@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T05:16:27Z",
+    "last_updated": "2025-12-19T05:18:30Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -251,12 +251,14 @@
           "dependencies": [],
           "artifacts": {
             "tests": [
-              "src/content/policies.test.ts"
+              "src/content/policies.test.ts",
+              "src/content/navigation.test.ts"
             ],
             "migrations": [],
             "routes": [
               "src/app/about/page.tsx",
-              "src/app/about/[slug]/page.tsx"
+              "src/app/about/[slug]/page.tsx",
+              "src/app/layout.tsx"
             ],
             "docs": [
               "plan.md"
@@ -276,15 +278,15 @@
             "Code of Conduct + Privacy/Terms pages exist"
           ],
           "last_action": {
-            "ts": "2025-12-19T05:16:27Z",
-            "action": "added policy content + about pages",
+            "ts": "2025-12-19T05:18:30Z",
+            "action": "aligned global navigation",
             "from_status": "in_progress",
             "to_status": "in_progress",
-            "commit": "d00cd7e",
+            "commit": "",
             "tests": [
-              "src/content/policies.test.ts"
+              "src/content/navigation.test.ts"
             ],
-            "notes": "Added about index and policy detail pages backed by content."
+            "notes": "Added primary navigation config and updated layout links."
           }
         },
         {

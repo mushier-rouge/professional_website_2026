@@ -4,6 +4,7 @@ import Link from "next/link";
 import "./globals.css";
 
 import { UserButton } from "@/components/auth/UserButton";
+import { memberNav, primaryNav } from "@/content/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,36 +44,25 @@ export default function RootLayout({
                 Sanjay Devnani
               </Link>
               <nav className="flex items-center gap-4 text-sm text-zinc-700 dark:text-zinc-300">
-                <Link
-                  href="/"
-                  className="rounded-md px-2 py-1 hover:bg-black/[.04] dark:hover:bg-white/[.06]"
-                >
-                  Profile
-                </Link>
-                <Link
-                  href="/account"
-                  className="rounded-md px-2 py-1 hover:bg-black/[.04] dark:hover:bg-white/[.06]"
-                >
-                  Account
-                </Link>
-                <Link
-                  href="/profile/edit"
-                  className="rounded-md px-2 py-1 hover:bg-black/[.04] dark:hover:bg-white/[.06]"
-                >
-                  Edit profile
-                </Link>
-                <Link
-                  href="/membership-grades"
-                  className="rounded-md px-2 py-1 hover:bg-black/[.04] dark:hover:bg-white/[.06]"
-                >
-                  Membership grades
-                </Link>
-                <Link
-                  href="/articles"
-                  className="rounded-md px-2 py-1 hover:bg-black/[.04] dark:hover:bg-white/[.06]"
-                >
-                  Articles
-                </Link>
+                {primaryNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-md px-2 py-1 hover:bg-black/[.04] dark:hover:bg-white/[.06]"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+                <span className="h-4 w-px bg-black/[.06] dark:bg-white/[.12]" />
+                {memberNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-md px-2 py-1 hover:bg-black/[.04] dark:hover:bg-white/[.06]"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
                 <UserButton />
               </nav>
             </div>
