@@ -1,44 +1,64 @@
 # Profile Management - Feature Expectations
 
 ## Scope
-Profile management covers identity details, membership status, and profile editing for authenticated users.
+Profile management provides a CV-like member profile, privacy controls, and membership grade display.
 
-## User Flows
-- First login -> create profile if missing -> redirect to /profile/edit.
-- Edit profile -> save -> confirmation state.
-- View account summary -> /account shows session info and current membership grade.
+## Feature set (v1)
+- Create profile on first login (profile row created on save).
+- Edit profile details and publish updates.
+- Public profile page with credibility-first metadata.
+- Member directory listing with grade badge and primary details.
+- Visibility controls: public / unlisted / private.
+- Directory opt-out toggle.
+- Verification badges (email verified, ORCID connected, manual).
+- Membership grade badge shown in profile header and directory cards.
 
-## Required Data Fields
-- display_name (required, 2-80 chars)
-- linkedin_url (optional, must be valid https URL if present)
-- avatar_url (optional, must be valid https URL if present)
-- membership_grade (system-managed, default "member")
+## Profile data model
+### Public fields
+- Display name (required)
+- Headshot/avatar
+- Title/role
+- Affiliation
+- Location (city/country)
+- Short bio + long bio
+- Expertise tags (controlled taxonomy)
+- Links: website, GitHub, LinkedIn, Google Scholar, ORCID
+- Selected work (curated list)
+- Membership grade badge + awarded date
 
-## UI Surfaces
-- /account
-  - Show email, user id, membership grade, and profile summary.
-  - Include actions: Edit profile, Apply for membership upgrade.
-- /profile/edit
-  - Editable fields: display_name, linkedin_url, avatar_url.
-  - Read-only membership grade indicator.
+### Private fields
+- Email
+- Phone (optional)
+- Admin notes / moderation flags
+- Verification artifacts (if used)
 
-## Permissions and Privacy
-- Users can only view or edit their own profile data.
-- Profile fields are private by default until a public profile page is added.
+## User flows
+- First login -> prompt to complete profile -> save -> redirect to account/profile.
+- Edit profile -> validate fields -> save -> confirmation state.
+- Public profile view -> shows badge, links, selected work, authored articles.
+- Directory browse -> filter by grade/expertise -> click to profile.
 
-## Validation and Error States
-- Block save if display_name is empty or too long.
-- Show inline validation for invalid URLs.
-- If Supabase is not configured, show a clear configuration warning.
+## Permissions and privacy
+- Users can edit only their own profile.
+- Public profiles are readable by anyone.
+- Unlisted profiles accessible via direct link only (not in directory).
+- Private profiles visible only to the owner and admins.
+
+## Validation and error states
+- Block save if display name is empty or too long.
+- Validate URL fields (https only).
+- Show inline error messages for invalid input.
+- If Supabase is not configured, show a clear warning.
 - If user is signed out, redirect to /login.
 
-## Acceptance Criteria
-- A signed-in user can create a profile on first login.
-- A signed-in user can update their profile and see changes reflected on /account.
-- A signed-out user cannot access /profile/edit.
-- Membership grade is visible but not editable by the user.
+## Acceptance criteria
+- Signed-in users can create and edit their profile.
+- Public profiles are visible to anonymous visitors.
+- Directory respects visibility + opt-out settings.
+- Membership grade badge displays consistently.
 
-## Testing Expectations
-- Unit tests for input validation and normalization.
-- E2E test for the create/edit profile flow.
-- Authorization checks ensure a user cannot edit another user's profile.
+## Testing expectations
+- Unit tests for validation and slug normalization.
+- Integration tests for profile CRUD with Supabase mocks.
+- E2E tests for create/edit profile flows.
+- RLS tests for owner-only updates and public reads.

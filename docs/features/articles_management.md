@@ -1,52 +1,81 @@
 # Articles Management - Feature Expectations
 
 ## Scope
-Articles management covers creating, listing, reading, editing, and deleting articles authored by signed-in users.
+Articles management covers authoring, review workflow, publishing, and public article pages.
 
-## User Flows
-- Create article: /articles/new -> submit -> redirect to /articles/[id].
-- Read article: /articles/[id] -> view title, summary, author, timestamps.
-- Edit article: /articles/[id]/edit -> update fields -> confirmation state.
-- List articles: /articles (and home page) -> show latest articles.
+## Content types (v1)
+- Article
+- Tutorial
+- Survey
+- Perspective
+- Practice Note
+- Editorial
 
-## Required Data Fields
-- title (required, 5-160 chars)
-- summary (optional, 0-1000 chars)
-- external_url (optional, valid https URL if present)
-- author_user_id (system-managed)
-- created_at / updated_at (system-managed)
+## Article schema (minimum)
+- Title, subtitle
+- Authors (linked to member profiles; guest author allowed)
+- Abstract
+- Topics/tags (controlled)
+- Body content (Markdown/MDX)
+- Figures/assets with captions + credits
+- References (structured)
+- Disclosures (funding, conflicts, ethics)
+- Status + timestamps (submitted/accepted/published)
 
-## UI Surfaces
-- /articles
-  - List cards with title, summary, author, created_at.
-  - Empty state when no articles exist.
-- /articles/new
-  - Form fields: title (required), summary (optional), external_url (optional).
-- /articles/[id]
-  - Article details and author card.
-- /articles/[id]/edit
-  - Same fields as create, with delete action if supported.
-- / (home)
-  - Show recent articles with pagination or "load more" behavior.
+## Workflow states
+- DRAFT
+- SUBMITTED
+- IN_REVIEW
+- REVISION_REQUESTED
+- RESUBMITTED
+- ACCEPTED
+- SCHEDULED
+- PUBLISHED
+- ARCHIVED
+- RETRACTED
 
-## Permissions and Visibility
-- Authenticated users can read articles.
-- Only the author can edit or delete their article.
-- Drafts are out of scope for now; create publishes immediately.
+## Authoring experience
+- Create draft with title + abstract
+- Edit draft content and metadata
+- Attach figures/assets
+- Submit for review (locks body in review states)
+- View status and editorial feedback
 
-## Validation and Error States
-- Block submit when title is missing or too long.
-- Show inline validation for invalid URLs.
-- Handle missing article id with a 404 state.
-- Graceful error if Supabase is not configured.
+## Editorial workflow
+- Editor triage: accept to review or desk reject
+- Assign reviewers
+- Capture reviewer recommendations
+- Decision letters (accept/minor/major/reject)
+- Publish immediately or schedule
 
-## Acceptance Criteria
-- A signed-in user can create, view, and edit their own article.
-- A signed-in user cannot edit another author's article.
-- The home page shows recent articles for signed-in users.
-- Article list renders empty-state messaging when no data exists.
+## Public article page (IEEE-style)
+- Metadata block: title, authors, dates, badges
+- Abstract callout panel
+- Table of contents (auto from headings)
+- Cite This panel (plain text + BibTeX)
+- Disclosures panel (always visible)
+- References list
 
-## Testing Expectations
-- Unit tests for validation logic and server actions.
-- Integration test for article create/update with Supabase client mocks.
-- E2E test for create -> view -> edit flow.
+## Permissions and visibility
+- Public can read published articles.
+- Authors can edit only their own drafts.
+- Reviewers can access assigned submissions only.
+- Editors can manage all submissions and publish.
+
+## Validation and error states
+- Title required (min length).
+- Validate URL fields for external links.
+- 404 for missing article IDs.
+- Clear error if Supabase is not configured.
+
+## Acceptance criteria
+- Authors can create, edit, and submit drafts.
+- Editors can transition workflow states.
+- Public can read published articles without login.
+- Article pages show abstract, cite-this, and disclosure panels.
+
+## Testing expectations
+- Unit tests for workflow state transitions.
+- Integration tests for create/update with Supabase mocks.
+- E2E test for create -> submit -> publish -> read.
+- RLS tests for public reads + author-only edits.
