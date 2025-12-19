@@ -27,3 +27,5 @@
 | T-023 | Implement article feed + CRUD skeleton | in_progress | `/articles`, `/articles/new`, and `/articles/[id]` implemented; requires applying `supabase/migrations/20251219001000_articles.sql`. |
 | T-024 | Implement article edit/delete flow | completed | `/articles/[id]/edit` + `supabase/migrations/20251219002000_articles_delete.sql`. |
 | T-025 | Add PDF upload for articles | pending | Supabase Storage bucket + RLS + upload UI. |
+| T-026 | Decide Fellow nomination mode | pending | Nomination-only vs hybrid. |
+| T-027 | Decide review visibility default | pending | Single-blind vs open. |

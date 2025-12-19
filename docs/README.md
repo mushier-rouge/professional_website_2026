@@ -3,6 +3,9 @@
 ## Project Management
 - [TODO List](todo.md)
 
+## Requirements
+- [Product Requirements + Technical Spec](requirements/product_spec.md)
+
 ## Features
 - [Profile Management](features/profile_management.md)
 - [Articles Management](features/articles_management.md)
