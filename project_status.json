@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T01:31:22Z",
+    "last_updated": "2025-12-19T01:32:35Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -27,7 +27,9 @@
               "supabase/migrations/20251219002000_articles_delete.sql"
             ],
             "routes": [],
-            "docs": []
+            "docs": [
+              "supabase/config.toml"
+            ]
           },
           "tdd": {
             "red_tests": [],
@@ -41,13 +43,13 @@
             "Editors can manage all articles"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:27:11Z",
-            "action": "initialized task",
-            "from_status": "not_started",
+            "ts": "2025-12-19T01:32:35Z",
+            "action": "initialized Supabase local config",
+            "from_status": "in_progress",
             "to_status": "in_progress",
             "commit": "",
             "tests": [],
-            "notes": "Existing migrations include initial RLS policies; tests not yet added."
+            "notes": "Ran supabase init to create local config."
           }
         },
         {
