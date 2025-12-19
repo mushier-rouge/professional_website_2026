@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T01:27:11Z",
+    "last_updated": "2025-12-19T01:30:28Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -290,16 +290,18 @@
       "id": "S2",
       "name": "Articles MVP",
       "status": "in_progress",
-      "progress": 0.15,
+      "progress": 0.2,
       "tasks": [
         {
           "id": "S2-T1",
           "title": "Article workflow FSM + tests",
-          "status": "not_started",
+          "status": "in_progress",
           "priority": "P0",
           "dependencies": [],
           "artifacts": {
-            "tests": [],
+            "tests": [
+              "src/lib/articles/workflow.test.ts"
+            ],
             "migrations": [],
             "routes": [],
             "docs": [
@@ -307,9 +309,14 @@
             ]
           },
           "tdd": {
-            "red_tests": [],
-            "green_tests": [],
-            "coverage_note": ""
+            "red_tests": [
+              "article workflow allows valid transitions",
+              "article workflow rejects invalid transitions"
+            ],
+            "green_tests": [
+              "article workflow returns allowed transitions"
+            ],
+            "coverage_note": "FSM allow/deny matrix covered for key transitions"
           },
           "acceptance_criteria": [
             "Valid transitions enforced",
@@ -317,13 +324,15 @@
             "Audit log recorded for state changes"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:27:11Z",
-            "action": "initialized task",
+            "ts": "2025-12-19T01:30:28Z",
+            "action": "added FSM tests + implementation",
             "from_status": "not_started",
-            "to_status": "not_started",
+            "to_status": "in_progress",
             "commit": "",
-            "tests": [],
-            "notes": ""
+            "tests": [
+              "src/lib/articles/workflow.test.ts"
+            ],
+            "notes": "Implemented basic state machine with allowed transitions."
           }
         },
         {
@@ -700,10 +709,10 @@
     "active": [
       "S1-T1",
       "S1-T2",
-      "S1-T3"
+      "S1-T3",
+      "S2-T1"
     ],
     "ready": [
-      "S2-T1",
       "S2-T4",
       "S4-T1"
     ],
@@ -711,7 +720,7 @@
   },
   "quality": {
     "last_ci": {
-      "ts": "2025-12-19T01:27:11Z",
+      "ts": "2025-12-19T01:30:28Z",
       "result": "unknown",
       "run_url": "",
       "notes": "CI status not recorded yet."
