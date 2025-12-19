@@ -11,3 +11,10 @@
 | T-007 | Document project identifiers and env var requirements | completed | Stored in docs/setup_guide.md. |
 | T-008 | Add ADR 001 for the tech stack decision | completed | Stored in docs/adr/001-tech-stack.md. |
 | T-009 | Add CI workflow doc and automation | completed | docs/workflow/ci_cd.md + .github/workflows/ci.yml. |
+| T-010 | Implement login flow | pending | Auth UI + session handling + tests. |
+| T-011 | Implement logout flow | pending | End session + redirect + tests. |
+| T-012 | Implement create profile flow | pending | User profile model + form + tests. |
+| T-013 | Implement edit profile flow | pending | Update profile + tests. |
+| T-014 | Implement write article flow | pending | Create paper record + upload PDF + tests. |
+| T-015 | Implement read article flow | pending | Article detail view + tests. |
+| T-016 | Implement home page article feed | pending | List and filter + tests. |
