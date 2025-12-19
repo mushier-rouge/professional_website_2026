@@ -17,9 +17,11 @@
 
 ## Schema
 - [Index](schema/)
+- Supabase migrations are tracked in `supabase/migrations/`.
 
 ## API
 - [Index](api/)
 
 ## Workflow
 - [CI/CD](workflow/ci_cd.md)
+- [Deployment](workflow/deployment.md)
