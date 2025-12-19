@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T01:33:29Z",
+    "last_updated": "2025-12-19T01:34:39Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -16,7 +16,7 @@
         {
           "id": "S1-T1",
           "title": "Supabase RLS baseline policies + tests",
-          "status": "in_progress",
+          "status": "blocked",
           "priority": "P0",
           "dependencies": [],
           "artifacts": {
@@ -43,13 +43,13 @@
             "Editors can manage all articles"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:33:29Z",
-            "action": "initialized Supabase local config",
+            "ts": "2025-12-19T01:34:39Z",
+            "action": "blocked: Supabase local requires Docker",
             "from_status": "in_progress",
-            "to_status": "in_progress",
-            "commit": "696c2f5",
+            "to_status": "blocked",
+            "commit": "",
             "tests": [],
-            "notes": "Ran supabase init to create local config."
+            "notes": "supabase start failed; Docker daemon not running."
           }
         },
         {
@@ -709,16 +709,22 @@
   "work_queue": {
     "policy": "maximize_parallel_progress",
     "active": [
-      "S1-T1",
       "S1-T2",
       "S1-T3",
-      "S2-T1"
+      "S2-T1",
+      "S2-T4"
     ],
     "ready": [
       "S2-T4",
       "S4-T1"
     ],
-    "blocked": []
+    "blocked": [
+      {
+        "task": "S1-T1",
+        "reason": "Docker Desktop required for supabase start (local RLS tests)",
+        "since": "2025-12-19T01:34:39Z"
+      }
+    ]
   },
   "quality": {
     "last_ci": {
