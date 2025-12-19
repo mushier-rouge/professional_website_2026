@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T05:19:24Z",
+    "last_updated": "2025-12-19T05:29:54Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -126,13 +126,13 @@
             "Visibility + directory opt-out respected"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:27:11Z",
-            "action": "initialized task",
-            "from_status": "not_started",
+            "ts": "2025-12-19T05:29:54Z",
+            "action": "expanded profile management feature expectations",
+            "from_status": "in_progress",
             "to_status": "in_progress",
-            "commit": "",
+            "commit": "30d28d4",
             "tests": [],
-            "notes": "Profile edit UI exists; public profile + tests pending."
+            "notes": "Updated docs/features/profile_management.md with expanded scope and acceptance criteria."
           }
         },
         {
@@ -404,13 +404,13 @@
             "Revisions stored with metadata"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:27:11Z",
-            "action": "initialized task",
-            "from_status": "not_started",
+            "ts": "2025-12-19T05:29:54Z",
+            "action": "expanded articles management feature expectations",
+            "from_status": "in_progress",
             "to_status": "in_progress",
-            "commit": "",
+            "commit": "30d28d4",
             "tests": [],
-            "notes": "Draft UI exists; revisions not implemented."
+            "notes": "Updated docs/features/articles_management.md with workflow states and publishing expectations."
           }
         },
         {
