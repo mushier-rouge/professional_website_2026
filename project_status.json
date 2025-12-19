@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T05:11:57Z",
+    "last_updated": "2025-12-19T05:12:52Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -169,11 +169,11 @@
             "Opt-out members are excluded"
           ],
           "last_action": {
-            "ts": "2025-12-19T05:11:57Z",
+            "ts": "2025-12-19T05:12:52Z",
             "action": "added member directory scaffolding",
             "from_status": "not_started",
             "to_status": "in_progress",
-            "commit": "",
+            "commit": "af1ec00",
             "tests": [
               "src/lib/members/slug.test.ts"
             ],
