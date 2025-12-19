@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
@@ -128,6 +129,14 @@ export function LoginForm() {
           required
         />
       </div>
+      <div className="text-right">
+        <Link
+          href="/login/reset"
+          className="text-xs text-zinc-600 hover:underline dark:text-zinc-400"
+        >
+          Forgot password?
+        </Link>
+      </div>
 
       {status.kind === "error" ? (
         <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-900 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-100">
@@ -155,4 +164,3 @@ export function LoginForm() {
     </form>
   );
 }
-

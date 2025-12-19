@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T01:35:30Z",
+    "last_updated": "2025-12-19T01:39:15Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -59,30 +59,42 @@
           "priority": "P0",
           "dependencies": [],
           "artifacts": {
-            "tests": [],
+            "tests": [
+              "src/lib/auth/reset.test.ts"
+            ],
             "migrations": [],
             "routes": [
-              "src/app/login/page.tsx"
+              "src/app/login/page.tsx",
+              "src/app/login/reset/page.tsx",
+              "src/app/login/reset/confirm/page.tsx"
             ],
             "docs": []
           },
           "tdd": {
-            "red_tests": [],
-            "green_tests": [],
-            "coverage_note": ""
+            "red_tests": [
+              "requestPasswordReset rejects empty email",
+              "requestPasswordReset rejects invalid email",
+              "requestPasswordReset surfaces supabase errors"
+            ],
+            "green_tests": [
+              "requestPasswordReset passes redirectTo"
+            ],
+            "coverage_note": "Password reset helper validation covered; UI not yet E2E-tested."
           },
           "acceptance_criteria": [
             "Signup, login, password reset flows work end-to-end",
             "Email verification enforced for restricted actions"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:27:11Z",
-            "action": "initialized task",
-            "from_status": "not_started",
+            "ts": "2025-12-19T01:39:15Z",
+            "action": "added password reset helper + UI",
+            "from_status": "in_progress",
             "to_status": "in_progress",
             "commit": "",
-            "tests": [],
-            "notes": "Login UI exists; signup/reset flows not verified with tests."
+            "tests": [
+              "src/lib/auth/reset.test.ts"
+            ],
+            "notes": "Added reset request + confirm pages and helper tests."
           }
         },
         {
