@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
+import { submitCredentials } from "@/lib/auth/credentials";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 
 export function LoginForm() {
@@ -40,29 +41,13 @@ export function LoginForm() {
         setStatus({ kind: "working" });
 
         try {
-          if (!email.trim()) throw new Error("Email is required.");
-          if (!password) throw new Error("Password is required.");
-
-          if (mode === "signin") {
-            const { error } = await supabase.auth.signInWithPassword({
-              email,
-              password,
-            });
-            if (error) throw error;
-
-            setStatus({ kind: "success", message: "Signed in." });
-            router.push("/");
-            router.refresh();
-            return;
-          }
-
-          const { error } = await supabase.auth.signUp({ email, password });
-          if (error) throw error;
-
-          setStatus({
-            kind: "success",
-            message: "Account created. Check your email if confirmation is required.",
-          });
+          const result = await submitCredentials(supabase, mode, email, password);
+          setStatus(
+            result.ok
+              ? { kind: "success", message: result.message }
+              : { kind: "error", message: result.message }
+          );
+          if (!result.ok) return;
           router.push("/");
           router.refresh();
         } catch (err) {

@@ -2,20 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import type { MembershipGrade } from "@/lib/membership";
+import type { ProfileVisibility } from "@/lib/profile/types";
 import { createSupabaseServerClient } from "@/lib/supabase/serverClient";
 
-import { EditProfileForm } from "./ui/EditProfileForm";
+import { EditProfileFormExpanded, type ExpandedProfileDefaults } from "./ui/EditProfileFormExpanded";
+import { AvatarUpload } from "./ui/AvatarUpload";
 
 export const metadata: Metadata = {
   title: "Edit profile",
   description: "Edit your member profile.",
-};
-
-type ProfileDefaults = {
-  displayName: string;
-  linkedinUrl: string;
-  avatarUrl: string;
-  membershipGrade: MembershipGrade;
 };
 
 export default async function EditProfilePage() {
@@ -23,10 +18,21 @@ export default async function EditProfilePage() {
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   const user = data.user;
 
-  let profileDefaults: ProfileDefaults = {
+  let profileDefaults: ExpandedProfileDefaults = {
     displayName: "",
+    title: "",
+    affiliation: "",
+    location: "",
+    shortBio: "",
+    bio: "",
     linkedinUrl: "",
     avatarUrl: "",
+    websiteUrl: "",
+    githubUrl: "",
+    scholarUrl: "",
+    orcidUrl: "",
+    visibility: "public",
+    directoryOptOut: false,
     membershipGrade: "member",
   };
   let profileLoadError: string | null = null;
@@ -34,18 +40,29 @@ export default async function EditProfilePage() {
   if (supabase && user) {
     const { data: row, error } = await supabase
       .from("profiles")
-      .select("display_name,linkedin_url,avatar_url,membership_grade")
+      .select("*")
       .eq("user_id", user.id)
       .maybeSingle();
 
     if (error) {
       profileLoadError =
-        "Unable to load your profile. Ensure the Supabase schema is applied and RLS policies allow reads.";
+        "Unable to load your profile. Ensure the Supabase migrations are applied.";
     } else if (row) {
       profileDefaults = {
         displayName: row.display_name ?? "",
+        title: row.title ?? "",
+        affiliation: row.affiliation ?? "",
+        location: row.location ?? "",
+        shortBio: row.short_bio ?? "",
+        bio: row.bio ?? "",
         linkedinUrl: row.linkedin_url ?? "",
         avatarUrl: row.avatar_url ?? "",
+        websiteUrl: row.website_url ?? "",
+        githubUrl: row.github_url ?? "",
+        scholarUrl: row.scholar_url ?? "",
+        orcidUrl: row.orcid_url ?? "",
+        visibility: (row.visibility ?? "public") as ProfileVisibility,
+        directoryOptOut: row.directory_opt_out ?? false,
         membershipGrade: (row.membership_grade ?? "member") as MembershipGrade,
       };
     }
@@ -97,11 +114,19 @@ export default async function EditProfilePage() {
             <section className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-100">
               <p className="font-medium">Could not load your existing profile.</p>
               <p className="mt-2 text-amber-800 dark:text-amber-200">
-                You can still save your details, but you may need to apply the Supabase migrations.
+                You may need to apply the expanded profile migration in Supabase.
               </p>
             </section>
           ) : null}
-          <EditProfileForm
+
+          <section className="rounded-2xl border border-black/[.06] bg-white p-6 shadow-sm dark:border-white/[.08] dark:bg-zinc-950">
+            <AvatarUpload
+              currentAvatarUrl={profileDefaults.avatarUrl}
+              userId={user.id}
+            />
+          </section>
+
+          <EditProfileFormExpanded
             userEmail={user.email ?? ""}
             userId={user.id}
             initialProfile={profileDefaults}

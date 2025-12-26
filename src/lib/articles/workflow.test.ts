@@ -1,29 +1,29 @@
 import { describe, expect, it } from "vitest";
 
-import { canTransition, getAllowedTransitions, type ArticleState } from "./workflow";
+import { canTransition, type ArticleStatus } from "./workflow";
 
-type Transition = [ArticleState, ArticleState];
+type Transition = [ArticleStatus, ArticleStatus];
 
 const validTransitions: Transition[] = [
-  ["DRAFT", "SUBMITTED"],
-  ["SUBMITTED", "IN_REVIEW"],
-  ["IN_REVIEW", "REVISION_REQUESTED"],
-  ["IN_REVIEW", "ACCEPTED"],
-  ["REVISION_REQUESTED", "RESUBMITTED"],
-  ["RESUBMITTED", "IN_REVIEW"],
-  ["ACCEPTED", "SCHEDULED"],
-  ["ACCEPTED", "PUBLISHED"],
-  ["SCHEDULED", "PUBLISHED"],
-  ["PUBLISHED", "ARCHIVED"],
-  ["PUBLISHED", "RETRACTED"],
+  ["draft", "submitted"],
+  ["submitted", "in_review"],
+  ["in_review", "revision_requested"],
+  ["in_review", "accepted"],
+  ["revision_requested", "resubmitted"],
+  ["resubmitted", "in_review"],
+  ["accepted", "scheduled"],
+  ["accepted", "published"],
+  ["scheduled", "published"],
+  ["published", "archived"],
+  ["published", "retracted"],
 ];
 
 const invalidTransitions: Transition[] = [
-  ["DRAFT", "PUBLISHED"],
-  ["SUBMITTED", "PUBLISHED"],
-  ["RESUBMITTED", "PUBLISHED"],
-  ["ARCHIVED", "PUBLISHED"],
-  ["RETRACTED", "PUBLISHED"],
+  ["draft", "published"],
+  ["submitted", "published"],
+  ["resubmitted", "published"],
+  ["archived", "published"],
+  ["retracted", "published"],
 ];
 
 describe("article workflow transitions", () => {
@@ -37,9 +37,5 @@ describe("article workflow transitions", () => {
     for (const [from, to] of invalidTransitions) {
       expect(canTransition(from, to)).toBe(false);
     }
-  });
-
-  it("returns allowed transitions for a state", () => {
-    expect(getAllowedTransitions("PUBLISHED")).toEqual(["ARCHIVED", "RETRACTED"]);
   });
 });

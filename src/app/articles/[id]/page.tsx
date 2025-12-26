@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { buildBibTeX, buildCitation } from "@/lib/articles/citation";
 import { createSupabaseServerClient } from "@/lib/supabase/serverClient";
@@ -7,22 +9,24 @@ import { createSupabaseServerClient } from "@/lib/supabase/serverClient";
 type ArticleRow = {
   id: string;
   title: string;
-  summary: string | null;
-  external_url: string | null;
+  slug: string;
+  abstract: string | null;
+  content: string | null;
+  article_type: string | null;
+  topics: string[] | null;
+  status: string;
   created_at: string;
-  author_user_id: string;
+  author_id: string;
+  author: {
+    display_name: string | null;
+    user_id: string;
+  } | null;
 };
 
 export const metadata: Metadata = {
   title: "Article",
   description: "Article details.",
 };
-
-function formatIsoDate(value: string): string {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return date.toISOString().slice(0, 10);
-}
 
 export default async function ArticleDetailPage({
   params,
@@ -37,7 +41,7 @@ export default async function ArticleDetailPage({
 
   if (!supabase) {
     return (
-      <div className="mx-auto w-full max-w-2xl space-y-6">
+      <div className="mx-auto w-full max-w-3xl space-y-6">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
           Article
         </h1>
@@ -45,153 +49,196 @@ export default async function ArticleDetailPage({
           <p className="font-medium">Supabase is not configured.</p>
         </div>
         <Link href="/articles" className="text-sm text-zinc-600 hover:underline dark:text-zinc-400">
-          Back to feed
+          Back to articles
         </Link>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="mx-auto w-full max-w-2xl space-y-6">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-          Article
-        </h1>
-        <div className="rounded-2xl border border-black/[.06] bg-white p-6 shadow-sm dark:border-white/[.08] dark:bg-zinc-950">
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            You must be signed in to view articles.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Link
-              href="/login"
-              className="inline-flex h-10 items-center justify-center rounded-lg bg-zinc-950 px-4 text-sm font-medium text-white shadow-sm hover:opacity-90 dark:bg-white dark:text-black"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/articles"
-              className="inline-flex h-10 items-center justify-center rounded-lg border border-black/[.08] bg-white px-4 text-sm font-medium text-zinc-900 shadow-sm hover:bg-black/[.02] dark:border-white/[.12] dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-white/[.06]"
-            >
-              Back to feed
-            </Link>
-          </div>
-        </div>
       </div>
     );
   }
 
   const { data: row, error } = await supabase
     .from("articles")
-    .select("id,title,summary,external_url,created_at,author_user_id")
+    .select(`
+      id,
+      title,
+      slug,
+      abstract,
+      content,
+      article_type,
+      topics,
+      status,
+      created_at,
+      author_id,
+      author:profiles!articles_author_id_fkey(display_name, user_id)
+    `)
     .eq("id", id)
     .single();
 
   if (error || !row) {
     return (
-      <div className="mx-auto w-full max-w-2xl space-y-6">
+      <div className="mx-auto w-full max-w-3xl space-y-6">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
           Article
         </h1>
         <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-900 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-100">
-          Article not found (or schema not applied).
+          Article not found.
         </div>
         <Link href="/articles" className="text-sm text-zinc-600 hover:underline dark:text-zinc-400">
-          Back to feed
+          Back to articles
         </Link>
       </div>
     );
   }
 
-  const article = row as ArticleRow;
-  const isAuthor = article.author_user_id === user.id;
-  const authorLabel = isAuthor ? user.email ?? "You" : "Member";
-  const publishedDate = formatIsoDate(article.created_at);
+  const article = row as unknown as ArticleRow;
+  const isAuthor = user && article.author_id === user.id;
+
+  // Check access permissions
+  // Published articles are visible to everyone
+  // Non-published articles are only visible to the author
+  if (article.status !== "published" && !isAuthor) {
+    return (
+      <div className="mx-auto w-full max-w-3xl space-y-6">
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+          Article
+        </h1>
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-100">
+          <p className="font-medium">This article is not yet published.</p>
+          <p className="mt-2 text-amber-800 dark:text-amber-200">
+            Only the author can view this article while it&apos;s in {article.status} status.
+          </p>
+        </div>
+        <Link href="/articles" className="text-sm text-zinc-600 hover:underline dark:text-zinc-400">
+          Back to articles
+        </Link>
+      </div>
+    );
+  }
+
+  const authorLabel = article.author?.display_name ?? "Unknown Author";
   const citeThis = buildCitation({
     title: article.title,
     author: authorLabel,
     publishedAt: article.created_at,
-    url: article.external_url ?? undefined,
+    url: undefined,
   });
   const bibTeX = buildBibTeX({
     title: article.title,
     author: authorLabel,
     publishedAt: article.created_at,
-    url: article.external_url ?? undefined,
+    url: undefined,
   });
 
   return (
-    <div className="mx-auto w-full max-w-2xl space-y-6">
-      <header className="space-y-3">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+    <div className="mx-auto w-full max-w-3xl space-y-8">
+      <header className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {article.article_type && (
+            <span className="rounded bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+              {article.article_type}
+            </span>
+          )}
+          {article.status !== "published" && (
+            <span className="rounded bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
+              {article.status}
+            </span>
+          )}
+        </div>
+
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">
           {article.title}
         </h1>
-        <dl className="flex flex-wrap gap-6 text-xs text-zinc-500 dark:text-zinc-400">
-          <div>
-            <dt className="uppercase tracking-wide">Author</dt>
-            <dd className="mt-1 text-zinc-700 dark:text-zinc-300">{authorLabel}</dd>
+
+        <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400">
+          {article.author && (
+            <Link
+              href={`/members/${article.author.user_id}`}
+              className="font-medium text-zinc-900 hover:underline dark:text-zinc-100"
+            >
+              {authorLabel}
+            </Link>
+          )}
+          <span>•</span>
+          <time dateTime={article.created_at}>
+            {new Date(article.created_at).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
+        </div>
+
+        {article.topics && article.topics.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {article.topics.map((topic) => (
+              <span
+                key={topic}
+                className="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+              >
+                {topic}
+              </span>
+            ))}
           </div>
-          <div>
-            <dt className="uppercase tracking-wide">Published</dt>
-            <dd className="mt-1 text-zinc-700 dark:text-zinc-300">{publishedDate}</dd>
-          </div>
-        </dl>
+        )}
       </header>
 
-      <section className="rounded-2xl border border-black/[.06] bg-white p-5 text-sm text-zinc-700 shadow-sm dark:border-white/[.08] dark:bg-zinc-950 dark:text-zinc-200">
-        <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-          Abstract
-        </h2>
-        <p className="mt-2 leading-6">
-          {article.summary || "No abstract has been provided yet."}
-        </p>
-      </section>
-
-      <section className="rounded-2xl border border-black/[.06] bg-white p-5 text-sm text-zinc-700 shadow-sm dark:border-white/[.08] dark:bg-zinc-950 dark:text-zinc-200">
-        <div className="flex items-center justify-between">
+      {article.abstract && (
+        <section className="rounded-2xl border border-black/[.06] bg-white p-6 shadow-sm dark:border-white/[.08] dark:bg-zinc-950">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-            Cite this
+            Abstract
           </h2>
-          {article.external_url ? (
-            <a
-              href={article.external_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-zinc-600 hover:underline dark:text-zinc-400"
-            >
-              Source link
-            </a>
-          ) : null}
-        </div>
-        <p className="mt-2 font-mono text-xs text-zinc-800 dark:text-zinc-200">
+          <p className="mt-3 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
+            {article.abstract}
+          </p>
+        </section>
+      )}
+
+      {article.content && (
+        <section className="rounded-2xl border border-black/[.06] bg-white p-8 shadow-sm dark:border-white/[.08] dark:bg-zinc-950">
+          <div className="prose prose-zinc prose-sm dark:prose-invert max-w-none">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {article.content}
+            </ReactMarkdown>
+          </div>
+        </section>
+      )}
+
+      <section className="rounded-2xl border border-black/[.06] bg-white p-6 shadow-sm dark:border-white/[.08] dark:bg-zinc-950">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+          Cite this article
+        </h2>
+        <p className="mt-3 font-mono text-xs text-zinc-800 dark:text-zinc-200">
           {citeThis}
         </p>
-        <pre className="mt-4 overflow-x-auto rounded-lg border border-black/[.06] bg-zinc-50 p-3 text-xs text-zinc-800 dark:border-white/[.08] dark:bg-zinc-900 dark:text-zinc-200">
-          {bibTeX}
-        </pre>
+        <details className="mt-4">
+          <summary className="cursor-pointer text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+            Show BibTeX
+          </summary>
+          <pre className="mt-3 overflow-x-auto rounded-lg border border-black/[.06] bg-zinc-50 p-4 text-xs text-zinc-800 dark:border-white/[.08] dark:bg-zinc-900 dark:text-zinc-200">
+            {bibTeX}
+          </pre>
+        </details>
       </section>
 
-      <section className="rounded-2xl border border-black/[.06] bg-white p-5 text-sm text-zinc-700 shadow-sm dark:border-white/[.08] dark:bg-zinc-950 dark:text-zinc-200">
-        <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-          Disclosures
-        </h2>
-        <p className="mt-2">No disclosures reported.</p>
-      </section>
-
-      <div className="flex flex-wrap gap-4 text-sm">
+      <div className="flex flex-wrap gap-4 border-t border-black/[.06] pt-6 text-sm dark:border-white/[.08]">
         <Link href="/articles" className="text-zinc-600 hover:underline dark:text-zinc-400">
-          Back to feed
+          All articles
         </Link>
-        <Link href="/articles/new" className="text-zinc-600 hover:underline dark:text-zinc-400">
-          New article
-        </Link>
-        {isAuthor ? (
+        {isAuthor && (
           <Link
             href={`/articles/${article.id}/edit`}
             className="text-zinc-600 hover:underline dark:text-zinc-400"
           >
-            Edit article
+            Edit this article
           </Link>
-        ) : null}
+        )}
+        {article.author && (
+          <Link
+            href={`/members/${article.author.user_id}`}
+            className="text-zinc-600 hover:underline dark:text-zinc-400"
+          >
+            View author profile
+          </Link>
+        )}
       </div>
     </div>
   );

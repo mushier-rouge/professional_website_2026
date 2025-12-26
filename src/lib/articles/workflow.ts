@@ -10,6 +10,18 @@ export type ArticleState =
   | "ARCHIVED"
   | "RETRACTED";
 
+export type ArticleStatus =
+  | "draft"
+  | "submitted"
+  | "in_review"
+  | "revision_requested"
+  | "resubmitted"
+  | "accepted"
+  | "scheduled"
+  | "published"
+  | "archived"
+  | "retracted";
+
 const transitions: Record<ArticleState, ArticleState[]> = {
   DRAFT: ["SUBMITTED"],
   SUBMITTED: ["IN_REVIEW"],
@@ -23,10 +35,23 @@ const transitions: Record<ArticleState, ArticleState[]> = {
   RETRACTED: [],
 };
 
+const statusTransitions: Record<ArticleStatus, ArticleStatus[]> = {
+  draft: ["submitted"],
+  submitted: ["in_review"],
+  in_review: ["revision_requested", "accepted"],
+  revision_requested: ["resubmitted"],
+  resubmitted: ["in_review"],
+  accepted: ["scheduled", "published"],
+  scheduled: ["published"],
+  published: ["archived", "retracted"],
+  archived: [],
+  retracted: [],
+};
+
 export function getAllowedTransitions(state: ArticleState): ArticleState[] {
   return transitions[state];
 }
 
-export function canTransition(from: ArticleState, to: ArticleState): boolean {
-  return transitions[from].includes(to);
+export function canTransition(from: ArticleStatus, to: ArticleStatus): boolean {
+  return statusTransitions[from]?.includes(to) ?? false;
 }

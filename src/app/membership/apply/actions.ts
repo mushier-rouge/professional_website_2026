@@ -13,16 +13,18 @@ export async function applyForMembershipUpgrade(
   _prevState: ApplyState | undefined,
   formData: FormData,
 ): Promise<ApplyState> {
-  const requestedGrade = String(formData.get("requestedGrade") ?? "");
-  const evidence = String(formData.get("evidence") ?? "");
-  const links = String(formData.get("links") ?? "");
+  const targetGrade = String(formData.get("targetGrade") ?? "");
+  const statement = String(formData.get("statement") ?? "");
+  const achievements = String(formData.get("achievements") ?? "");
+  const publications = String(formData.get("publications") ?? "");
+  const contributions = String(formData.get("contributions") ?? "");
 
-  if (requestedGrade !== "senior" && requestedGrade !== "fellow") {
+  if (targetGrade !== "senior" && targetGrade !== "fellow") {
     return { ok: false, message: "Select Senior Member or Fellow." };
   }
 
-  if (!evidence.trim()) {
-    return { ok: false, message: "Evidence is required." };
+  if (!statement.trim()) {
+    return { ok: false, message: "Personal statement is required." };
   }
 
   const supabase = await createSupabaseServerClient();
@@ -35,11 +37,35 @@ export async function applyForMembershipUpgrade(
     return { ok: false, message: "You must be signed in to apply." };
   }
 
+  // Check if user already has a pending or approved application for this grade
+  const { data: existingApp } = await supabase
+    .from("membership_applications")
+    .select("id, status, target_grade")
+    .eq("user_id", userData.user.id)
+    .in("status", ["draft", "submitted", "under_review", "approved"])
+    .single();
+
+  if (existingApp) {
+    if (existingApp.status === "approved") {
+      return { ok: false, message: "You already have an approved application." };
+    }
+    if (existingApp.target_grade === targetGrade) {
+      return {
+        ok: false,
+        message: `You already have a ${existingApp.status} application for ${targetGrade}.`
+      };
+    }
+  }
+
   const { error } = await supabase.from("membership_applications").insert({
     user_id: userData.user.id,
-    requested_grade: requestedGrade as MembershipGrade,
-    evidence,
-    links,
+    target_grade: targetGrade as MembershipGrade,
+    statement,
+    achievements: achievements.trim() || null,
+    publications: publications.trim() || null,
+    contributions: contributions.trim() || null,
+    status: "submitted",
+    submitted_at: new Date().toISOString(),
   });
 
   if (error) {
@@ -53,6 +79,6 @@ export async function applyForMembershipUpgrade(
   revalidatePath("/membership/apply");
   revalidatePath("/account");
 
-  return { ok: true, message: "Application submitted." };
+  return { ok: true, message: "Application submitted successfully! You will be notified when it is reviewed." };
 }
 

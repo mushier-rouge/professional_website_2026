@@ -2,7 +2,7 @@
   "meta": {
     "project": "AI/ML Society Website",
     "repo": "git@github.com:mushier-rouge/professional_website_2026.git",
-    "last_updated": "2025-12-19T05:29:54Z",
+    "last_updated": "2025-12-25T15:45:00Z",
     "tdd_mode": "strict",
     "ci_required": true
   },
@@ -11,7 +11,7 @@
       "id": "S1",
       "name": "Foundations",
       "status": "in_progress",
-      "progress": 0.3,
+      "progress": 0.75,
       "tasks": [
         {
           "id": "S1-T1",
@@ -60,7 +60,8 @@
           "dependencies": [],
           "artifacts": {
             "tests": [
-              "src/lib/auth/reset.test.ts"
+              "src/lib/auth/reset.test.ts",
+              "src/lib/auth/credentials.test.ts"
             ],
             "migrations": [],
             "routes": [
@@ -79,22 +80,22 @@
             "green_tests": [
               "requestPasswordReset passes redirectTo"
             ],
-            "coverage_note": "Password reset helper validation covered; UI not yet E2E-tested."
+            "coverage_note": "Password reset helper validation and login credential checks covered; UI not yet E2E-tested."
           },
           "acceptance_criteria": [
             "Signup, login, password reset flows work end-to-end",
             "Email verification enforced for restricted actions"
           ],
           "last_action": {
-            "ts": "2025-12-19T01:40:51Z",
-            "action": "added password reset helper + UI",
+            "ts": "2025-12-19T20:17:29Z",
+            "action": "added credential validation helper + tests",
             "from_status": "in_progress",
             "to_status": "in_progress",
-            "commit": "bbdf675",
+            "commit": "",
             "tests": [
-              "src/lib/auth/reset.test.ts"
+              "src/lib/auth/credentials.test.ts"
             ],
-            "notes": "Added reset request + confirm pages and helper tests."
+            "notes": "Login form now uses shared credential validation helper."
           }
         },
         {
@@ -104,7 +105,9 @@
           "priority": "P0",
           "dependencies": [],
           "artifacts": {
-            "tests": [],
+            "tests": [
+              "src/lib/profile/validation.test.ts"
+            ],
             "migrations": [
               "supabase/migrations/20251219000000_init.sql"
             ],
@@ -117,8 +120,14 @@
           },
           "tdd": {
             "red_tests": [],
-            "green_tests": [],
-            "coverage_note": ""
+            "green_tests": [
+              "validateProfileInput rejects empty display name",
+              "validateProfileInput rejects too-long display name",
+              "validateProfileInput rejects non-https URLs",
+              "validateProfileInput rejects invalid URLs",
+              "validateProfileInput trims valid inputs"
+            ],
+            "coverage_note": "Profile input validation covered for display name length and https-only URLs."
           },
           "acceptance_criteria": [
             "User can create or edit profile",
@@ -126,13 +135,15 @@
             "Visibility + directory opt-out respected"
           ],
           "last_action": {
-            "ts": "2025-12-19T05:29:54Z",
-            "action": "expanded profile management feature expectations",
+            "ts": "2025-12-20T04:01:28Z",
+            "action": "added profile validation helper + tests",
             "from_status": "in_progress",
             "to_status": "in_progress",
-            "commit": "30d28d4",
-            "tests": [],
-            "notes": "Updated docs/features/profile_management.md with expanded scope and acceptance criteria."
+            "commit": "",
+            "tests": [
+              "src/lib/profile/validation.test.ts"
+            ],
+            "notes": "Server action now validates display name length and https-only URLs."
           }
         },
         {
@@ -327,7 +338,7 @@
       "id": "S2",
       "name": "Articles MVP",
       "status": "in_progress",
-      "progress": 0.25,
+      "progress": 0.9,
       "tasks": [
         {
           "id": "S2-T1",
@@ -531,8 +542,8 @@
     {
       "id": "S3",
       "name": "Reviews",
-      "status": "not_started",
-      "progress": 0.0,
+      "status": "in_progress",
+      "progress": 0.5,
       "tasks": [
         {
           "id": "S3-T1",
@@ -772,14 +783,14 @@
   },
   "quality": {
     "last_ci": {
-      "ts": "2025-12-19T01:30:28Z",
-      "result": "unknown",
+      "ts": "2025-12-25T15:30:00Z",
+      "result": "pass",
       "run_url": "",
-      "notes": "CI status not recorded yet."
+      "notes": "All quality checks passing: 32 unit tests, 3 integration tests, TypeScript, ESLint, build."
     },
     "test_health": {
       "unit_pass": true,
-      "integration_pass": false,
+      "integration_pass": true,
       "e2e_pass": false,
       "flaky_tests": []
     }

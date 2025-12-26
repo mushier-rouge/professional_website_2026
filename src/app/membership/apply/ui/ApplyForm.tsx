@@ -31,13 +31,13 @@ export function ApplyForm({ userEmail }: { userEmail: string }) {
         </span>
       </div>
 
-      <form action={formAction} className="mt-5 space-y-4">
+      <form action={formAction} className="mt-5 space-y-5">
         <div className="space-y-2">
           <label className="text-sm font-medium text-zinc-950 dark:text-zinc-50">
-            Requested grade
+            Target grade
           </label>
           <select
-            name="requestedGrade"
+            name="targetGrade"
             className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-950 shadow-sm outline-none focus:border-zinc-400 dark:border-white/[.12] dark:bg-black dark:text-zinc-50 dark:focus:border-zinc-600"
             defaultValue="senior"
           >
@@ -55,29 +55,53 @@ export function ApplyForm({ userEmail }: { userEmail: string }) {
 
         <div className="space-y-2">
           <label className="text-sm font-medium text-zinc-950 dark:text-zinc-50">
-            Evidence (required)
+            Personal statement <span className="text-red-600">*</span>
           </label>
           <textarea
-            name="evidence"
+            name="statement"
             required
-            rows={7}
+            rows={6}
             className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-950 shadow-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400 dark:border-white/[.12] dark:bg-black dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:border-zinc-600"
-            placeholder="Summarize your sustained impact, leadership, and contributions relevant to the criteria."
+            placeholder="Describe your professional background, current role, and why you are applying for this grade."
           />
           <p className="text-xs text-zinc-500 dark:text-zinc-500">
-            Keep this factual and evidence-based.
+            Explain your motivation and qualifications.
           </p>
         </div>
 
         <div className="space-y-2">
           <label className="text-sm font-medium text-zinc-950 dark:text-zinc-50">
-            Links (optional)
+            Professional achievements
           </label>
           <textarea
-            name="links"
-            rows={3}
+            name="achievements"
+            rows={4}
             className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-950 shadow-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400 dark:border-white/[.12] dark:bg-black dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:border-zinc-600"
-            placeholder="Publications, projects, talks, repos, patents, etc."
+            placeholder="List key professional achievements, awards, recognitions, leadership roles, etc."
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-zinc-950 dark:text-zinc-50">
+            Key publications
+          </label>
+          <textarea
+            name="publications"
+            rows={4}
+            className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-950 shadow-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400 dark:border-white/[.12] dark:bg-black dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:border-zinc-600"
+            placeholder="List significant publications, patents, or technical reports."
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-zinc-950 dark:text-zinc-50">
+            Contributions to the field
+          </label>
+          <textarea
+            name="contributions"
+            rows={4}
+            className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-950 shadow-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400 dark:border-white/[.12] dark:bg-black dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:border-zinc-600"
+            placeholder="Describe your contributions to AI/ML community, open source, education, mentorship, etc."
           />
         </div>
 

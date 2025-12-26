@@ -11,16 +11,20 @@
     "start": "next start",
     "lint": "eslint --max-warnings=0",
     "test": "vitest run",
+    "test:integration": "vitest run --config vitest.config.integration.ts",
     "test:smoke": "node scripts/smoke_test.mjs",
-    "test:all": "npm run lint && npm test && npm run build && npm run test:smoke",
+    "test:all": "npm run lint && npm test && npm run test:integration && npm run build && npm run test:smoke",
     "prepare": "husky"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.89.0",
+    "@tailwindcss/typography": "^0.5.19",
     "next": "16.1.0",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^11.12.0",

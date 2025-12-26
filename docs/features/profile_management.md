@@ -45,7 +45,7 @@ Profile management provides a CV-like member profile, privacy controls, and memb
 - Private profiles visible only to the owner and admins.
 
 ## Validation and error states
-- Block save if display name is empty or too long.
+- Block save if display name is empty or over 120 characters.
 - Validate URL fields (https only).
 - Show inline error messages for invalid input.
 - If Supabase is not configured, show a clear warning.

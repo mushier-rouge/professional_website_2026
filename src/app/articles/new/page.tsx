@@ -3,11 +3,11 @@ import Link from "next/link";
 
 import { createSupabaseServerClient } from "@/lib/supabase/serverClient";
 
-import { CreateArticleForm } from "./ui/CreateArticleForm";
+import { ArticleEditorWrapper } from "./ui/ArticleEditorWrapper";
 
 export const metadata: Metadata = {
   title: "New article",
-  description: "Create a new article entry.",
+  description: "Create a new article.",
 };
 
 export default async function NewArticlePage() {
@@ -19,10 +19,10 @@ export default async function NewArticlePage() {
     <div className="mx-auto w-full max-w-2xl space-y-8">
       <header className="space-y-3">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-          New article
+          New Article
         </h1>
         <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-          Create an entry with a title, summary, and optional external link.
+          Write and publish your research, tutorials, or perspectives.
         </p>
       </header>
 
@@ -55,7 +55,7 @@ export default async function NewArticlePage() {
           </div>
         </section>
       ) : (
-        <CreateArticleForm userEmail={user.email ?? ""} />
+        <ArticleEditorWrapper userEmail={user.email ?? ""} />
       )}
 
       <div className="flex flex-wrap gap-4 text-sm">
