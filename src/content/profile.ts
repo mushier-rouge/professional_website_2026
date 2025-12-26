@@ -28,7 +28,7 @@ export type Profile = {
 
 export const profile: Profile = {
   name: "John Doe",
-  location: "Palo Alto, California",
+  location: "Remote",
   email: "john.doe@example.com",
   linkedinUrl: "https://linkedin.com/in/johndoe",
   photo: {
@@ -37,42 +37,36 @@ export const profile: Profile = {
   },
   membershipGrade: "member",
   education: [
-    { school: "University of Utah", degree: "M.S., Computer Science" },
+    { school: "State University", degree: "M.S., Computer Science" },
     {
-      school: "JNTU",
-      degree: "B.Tech, Electrical and Electronics Engineering",
+      school: "Example Institute of Technology",
+      degree: "B.S., Electrical Engineering",
     },
   ],
   experience: [
     {
-      company: "Google",
-      title: "Manager, Systems Security Architecture",
-      start: "Jan 2023",
+      company: "Example Labs",
+      title: "Engineering Manager",
+      start: "Jan 2022",
       end: "Present",
     },
     {
-      company: "Meta",
-      title: "Privacy Engineer / Tech Lead Manager",
-      start: "Mar 2022",
-      end: "Jan 2023",
-    },
-    {
-      company: "Apple",
-      title: "Software Engineer / Engineering Manager",
-      start: "Nov 2015",
-      end: "Aug 2021",
-    },
-    {
-      company: "Qualcomm",
+      company: "Fictional Tech Co.",
       title: "Senior Software Engineer",
-      start: "Apr 2013",
-      end: "Nov 2015",
+      start: "May 2019",
+      end: "Dec 2021",
     },
     {
-      company: "LSI",
+      company: "Sample Systems",
+      title: "Software Engineer",
+      start: "Jun 2016",
+      end: "Apr 2019",
+    },
+    {
+      company: "Acme Hardware",
       title: "Systems Engineer",
-      start: "May 2011",
-      end: "Apr 2013",
+      start: "Jul 2013",
+      end: "May 2016",
     },
   ],
 };
