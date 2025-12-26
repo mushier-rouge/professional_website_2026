@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Sanjay Devnani",
-    template: "%s | Sanjay Devnani",
+    default: "John Doe",
+    template: "%s | John Doe",
   },
   description: "Professional profile and membership information.",
 };
@@ -41,7 +41,7 @@ export default function RootLayout({
                 href="/"
                 className="text-sm font-semibold tracking-tight text-zinc-950 dark:text-zinc-50"
               >
-                Sanjay Devnani
+                John Doe
               </Link>
               <nav className="flex items-center gap-4 text-sm text-zinc-700 dark:text-zinc-300">
                 {primaryNav.map((item) => (
@@ -72,7 +72,7 @@ export default function RootLayout({
           </main>
           <footer className="border-t border-black/[.06] py-10 text-sm text-zinc-600 dark:border-white/[.08] dark:text-zinc-400">
             <div className="mx-auto w-full max-w-4xl px-6">
-              <p>Copyright {new Date().getFullYear()} Sanjay Devnani.</p>
+              <p>Copyright {new Date().getFullYear()} John Doe.</p>
             </div>
           </footer>
         </div>

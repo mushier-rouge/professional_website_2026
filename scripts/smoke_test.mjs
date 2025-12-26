@@ -79,7 +79,7 @@ async function main() {
 
     await fetchWithRetry("/", { timeoutMs: 30_000, intervalMs: 250 });
 
-    await assertPage("/", { mustContain: ["Sanjay Devnani", "Professional experience"] });
+    await assertPage("/", { mustContain: ["John Doe", "Professional experience"] });
     await assertPage("/membership-grades", {
       mustContain: ["Membership grades", "Senior Member"],
     });

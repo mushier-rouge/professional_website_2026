@@ -44,7 +44,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-zinc-600 hover:underline dark:text-zinc-400"
             >
-              linkedin.com/in/sanjaydevnani
+              linkedin.com/in/johndoe
             </a>
             <Link
               href="/membership-grades"

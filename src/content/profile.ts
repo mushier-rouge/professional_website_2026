@@ -27,13 +27,13 @@ export type Profile = {
 };
 
 export const profile: Profile = {
-  name: "Sanjay Devnani",
+  name: "John Doe",
   location: "Palo Alto, California",
-  email: "sanjay.devnani@gmail.com",
-  linkedinUrl: "https://linkedin.com/in/sanjaydevnani",
+  email: "john.doe@example.com",
+  linkedinUrl: "https://linkedin.com/in/johndoe",
   photo: {
     src: "/profile.svg",
-    alt: "Profile picture for Sanjay Devnani",
+    alt: "Profile picture for John Doe",
   },
   membershipGrade: "member",
   education: [
@@ -76,4 +76,3 @@ export const profile: Profile = {
     },
   ],
 };
-

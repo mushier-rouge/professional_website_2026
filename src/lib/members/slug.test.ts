@@ -4,7 +4,7 @@ import { isMemberSlugMatch, toMemberSlug } from "./slug";
 
 describe("toMemberSlug", () => {
   it("converts names to kebab-case", () => {
-    expect(toMemberSlug("Sanjay Devnani")).toBe("sanjay-devnani");
+    expect(toMemberSlug("John Doe")).toBe("john-doe");
   });
 
   it("strips punctuation and extra spaces", () => {
